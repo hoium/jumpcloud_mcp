@@ -27,7 +27,7 @@ This MCP server lets you:
 ### 1. Clone and configure environment
 
 ```bash
-git clone https://github.com/your-org/jumpcloud-mcp.git
+git clone https://gitlab.com/barkada/itops/jumpcloud-mcp
 cd jumpcloud-mcp
 cp .env.example .env
 ```
