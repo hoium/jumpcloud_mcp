@@ -1,4 +1,5 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
+
 from fastapi import FastAPI, Header, HTTPException, Depends, Request
 from fastapi.responses import JSONResponse, RedirectResponse
 from typing import Optional
