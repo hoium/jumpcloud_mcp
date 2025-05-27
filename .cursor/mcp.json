@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "jumpcloud-mcp": {
+      "name": "JumpCloud MCP",
+      "url": "http://localhost:8000/",
+      "description": "Natural language agent for JumpCloud users, systems, SSO applications, and groups."
+    }
+  }
+}

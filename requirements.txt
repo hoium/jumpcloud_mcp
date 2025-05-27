@@ -1,0 +1,9 @@
+cachetools
+email-validator
+fastapi
+httpx
+pytest
+pytest-asyncio
+python-dotenv
+requests
+uvicorn

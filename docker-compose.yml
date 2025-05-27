@@ -1,0 +1,11 @@
+services:
+  mcp-server:
+    build: .
+    container_name: jumpcloud-mcp
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    restart: unless-stopped
