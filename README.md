@@ -1,6 +1,6 @@
 # 🤖 JumpCloud MCP Server
 
-A natural language API server and agent for your JumpCloud environment, built with FastAPI.
+A natural language API server and agent for your JumpCloud environment, built with FastAPI. Created using ChatGPT and Cursor.
 
 This MCP server lets you:
 
@@ -89,7 +89,7 @@ jumpcloud_mcp/
 
 ---
 
-## 🔧 REST API Reference
+## 🔧 REST API Reference - [API Docs](http://localhost:8000/docs)
 
 ### 📍 GET Endpoints
 
@@ -101,9 +101,9 @@ jumpcloud_mcp/
 
 ### 📍 POST
 
-- `/users` — Create user
 - `/ask` — Accepts `{"prompt": "..."}`
-  - Uses only the **local agent** (no OpenAI/Claude)
+- `/users`
+  - `TODO` **Need to Test**
 
 ---
 
