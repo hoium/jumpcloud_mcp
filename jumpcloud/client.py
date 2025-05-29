@@ -27,7 +27,6 @@ cache = TTLCache(maxsize=128, ttl=300)
 
 async def _get(url, params=None):
     print(f"🌐 GET {url}")
-    print(f"🔐 Headers: {HEADERS}")
     start = time.time()
 
     try:
