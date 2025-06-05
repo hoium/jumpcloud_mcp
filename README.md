@@ -102,8 +102,8 @@ jumpcloud_mcp/
 ### 📍 POST
 
 - `/ask` — Accepts `{"prompt": "..."}`
-- `/users`
-  - `TODO` **Need to Test**
+- `/users/search` Search JumpCloud users using filters and fields.
+  - `{"filter": [{"department": "IT"}], "fields": "email username sudo"}`
 
 ---
 
