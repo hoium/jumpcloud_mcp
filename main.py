@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
-from fastapi import FastAPI, Header, HTTPException, Depends, Request
+from fastapi import FastAPI, Header, HTTPException, Depends, Request, Body
 from fastapi.responses import JSONResponse, RedirectResponse
 from typing import Optional
 
 from jumpcloud.models import UserCreate, PromptRequest
 from jumpcloud.client import (
     list_users, list_systems, list_sso_applications, list_user_groups, list_system_groups,
+    search_users,
 )
 from jumpcloud.auth import verify_token
 from jumpcloud.mcp_agent_runner import ask_mcp_local, TOOL_REGISTRY
@@ -123,6 +124,17 @@ async def mcp_handshake(request: Request):
                             "inputSchema": {
                                 "type": "object",
                                 "properties": {}
+                            }
+                        },
+                        {
+                            "name": "search_users",
+                            "description": "Search JumpCloud users with filters and fields (POST /users/search).",
+                            "inputSchema": {
+                                "type": "object",
+                                "properties": {
+                                    "filter": {"type": "array", "items": {"type": "object"}},
+                                    "fields": {"type": "string"}
+                                }
                             }
                         },
                     ]
@@ -256,3 +268,15 @@ async def ask(prompt: PromptRequest):
     except Exception as e:
         print(f"🔥 Tool failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/users/search", dependencies=[Depends(verify_token)])
+async def search_jumpcloud_users(
+    filter: Optional[list] = Body(default=None),
+    fields: Optional[str] = Body(default=None)
+):
+    """
+    Search JumpCloud users using filters and fields.
+    Example body: {"filter": [{"department": "IT"}], "fields": "email username sudo"}
+    """
+    return await search_users(filter=filter, fields=fields)
