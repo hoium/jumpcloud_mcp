@@ -5,6 +5,7 @@ from typing import Any, Dict, Tuple, Optional
 from jumpcloud.client import (
     list_sso_applications, list_systems, list_users,
     list_user_groups, list_system_groups,
+    search_users,
 )
 
 # Define a tool registry as a dictionary
@@ -14,6 +15,7 @@ TOOL_REGISTRY = {
     "list_users": list_users,
     "list_user_groups": list_user_groups,
     "list_system_groups": list_system_groups,
+    "search_users": search_users,
 }
 
 

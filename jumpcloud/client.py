@@ -130,3 +130,17 @@ async def list_sso_applications():
     print("✅ Response received")
     cache["sso_apps"] = data
     return data
+
+
+async def search_users(filter: list = None, fields: str = None):
+    """
+    Search JumpCloud users using the /api/search/systemusers endpoint.
+    :param filter: List of filter dicts, e.g., [{"department": "IT"}]
+    :param fields: Comma-separated string of fields to return, e.g., "email username sudo"
+    """
+    payload = {}
+    if filter is not None:
+        payload["filter"] = filter
+    if fields is not None:
+        payload["fields"] = fields
+    return await _post(f"{BASE_URL}/api/search/systemusers", payload)
