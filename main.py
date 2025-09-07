@@ -7,7 +7,7 @@ from typing import Optional
 from jumpcloud.models import UserCreate, PromptRequest
 from jumpcloud.client import (
     list_users, list_systems, list_sso_applications, list_user_groups, list_system_groups,
-    search_users,
+    search_users, search_commands,
 )
 from jumpcloud.auth import verify_token
 from jumpcloud.mcp_agent_runner import ask_mcp_local, TOOL_REGISTRY
@@ -129,6 +129,17 @@ async def mcp_handshake(request: Request):
                         {
                             "name": "search_users",
                             "description": "Search JumpCloud users with filters and fields (POST /users/search).",
+                            "inputSchema": {
+                                "type": "object",
+                                "properties": {
+                                    "filter": {"type": "array", "items": {"type": "object"}},
+                                    "fields": {"type": "string"}
+                                }
+                            }
+                        },
+                        {
+                            "name": "search_commands",
+                            "description": "Search JumpCloud commands with filters and fields (POST /commands/search).",
                             "inputSchema": {
                                 "type": "object",
                                 "properties": {
@@ -280,3 +291,15 @@ async def search_jumpcloud_users(
     Example body: {"filter": [{"department": "IT"}], "fields": "email username sudo"}
     """
     return await search_users(filter=filter, fields=fields)
+
+
+@app.post("/commands/search", dependencies=[Depends(verify_token)])
+async def search_jumpcloud_commands(
+    filter: Optional[list] = Body(default=None),
+    fields: Optional[str] = Body(default=None)
+):
+    """
+    Search JumpCloud commands using filters and fields.
+    Example body: {"filter": [{"command": "restart"}], "fields": "name command sudo"}
+    """
+    return await search_commands(filter=filter, fields=fields)

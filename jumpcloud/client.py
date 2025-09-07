@@ -144,3 +144,17 @@ async def search_users(filter: list = None, fields: str = None):
     if fields is not None:
         payload["fields"] = fields
     return await _post(f"{BASE_URL}/api/search/systemusers", payload)
+
+
+async def search_commands(filter: list = None, fields: str = None):
+    """
+    Search JumpCloud commands using the /api/search/commands endpoint.
+    :param filter: List of filter dicts, e.g., [{"command": "restart"}]
+    :param fields: Comma-separated string of fields to return, e.g., "name command sudo"
+    """
+    payload = {}
+    if filter is not None:
+        payload["filter"] = filter
+    if fields is not None:
+        payload["fields"] = fields
+    return await _post(f"{BASE_URL}/api/search/commands", payload)

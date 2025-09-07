@@ -104,6 +104,8 @@ jumpcloud_mcp/
 - `/ask` — Accepts `{"prompt": "..."}`
 - `/users/search` Search JumpCloud users using filters and fields.
   - `{"filter": [{"department": "IT"}], "fields": "email username sudo"}`
+- `/commands/search` Search JumpCloud commands using filters and fields.
+  - `{"filter": [{"command": "restart"}], "fields": "name command sudo"}`
 
 ---
 

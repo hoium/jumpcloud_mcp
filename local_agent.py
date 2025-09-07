@@ -7,6 +7,7 @@ from jumpcloud.client import (
     list_sso_applications,
     list_user_groups,
     list_system_groups,
+    search_commands,
 )
 
 tools = [
@@ -54,6 +55,18 @@ tools = [
         "parameters": {"type": "object", "properties": {}},
         "function": list_system_groups,
     },
+    {
+        "name": "search_commands",
+        "description": "Search JumpCloud commands.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "filter": {"type": "array"},
+                "fields": {"type": "string"},
+            },
+        },
+        "function": search_commands,
+    },
 ]
 
 TOOL_REGISTRY = {tool["name"]: tool["function"] for tool in tools}
@@ -61,7 +74,9 @@ TOOL_REGISTRY = {tool["name"]: tool["function"] for tool in tools}
 
 def ask_mcp_local(prompt: str):
     prompt = prompt.lower()
-    if "sso" in prompt and "app" in prompt:
+    if "command" in prompt:
+        return "search_commands", {}
+    elif "sso" in prompt and "app" in prompt:
         return "list_sso_apps", {}
     elif "mac" in prompt:
         return "list_systems", {"os": "mac", "active": True}

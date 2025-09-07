@@ -5,7 +5,7 @@ from typing import Any, Dict, Tuple, Optional
 from jumpcloud.client import (
     list_sso_applications, list_systems, list_users,
     list_user_groups, list_system_groups,
-    search_users,
+    search_users, search_commands,
 )
 
 # Define a tool registry as a dictionary
@@ -16,11 +16,18 @@ TOOL_REGISTRY = {
     "list_user_groups": list_user_groups,
     "list_system_groups": list_system_groups,
     "search_users": search_users,
+    "search_commands": search_commands,
 }
 
 
 def match_prompt_to_tool(prompt: str) -> Tuple[Optional[str], Dict[str, Any]]:
     prompt = prompt.lower()
+    if "command" in prompt:
+        args = {}
+        # Check if searching for specific command text
+        if "search" in prompt:
+            return "search_commands", args
+        return "search_commands", args
     if "sso" in prompt or "application" in prompt:
         return "list_sso_apps", {}
     if "system" in prompt or "device" in prompt:
