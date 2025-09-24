@@ -156,5 +156,3 @@ For any MCP-compatible client, configure it to connect to:
 This project is maintained for **local/private JumpCloud automation** and is ideal for secure deployments, development, and custom integrations with MCP-compatible AI assistants and code editors.
 
 ---
-
-## 📜 License
