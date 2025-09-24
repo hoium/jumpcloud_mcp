@@ -54,7 +54,7 @@ async def mcp_handshake(request: Request):
                         "name": "JumpCloud MCP",
                         "version": "1.0.0"
                     },
-                    "protocolVersion": "2025-03-26",
+                    "protocolVersion": "2024-11-05",
                     "capabilities": CAPABILITIES
                 }
             }
@@ -69,7 +69,7 @@ async def mcp_handshake(request: Request):
                         "name": "JumpCloud MCP",
                         "version": "1.0.0"
                     },
-                    "protocolVersion": "2025-03-26",
+                    "protocolVersion": "2024-11-05",
                     "capabilities": CAPABILITIES
                 }
             }

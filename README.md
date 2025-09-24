@@ -1,6 +1,6 @@
 # 🤖 JumpCloud MCP Server
 
-A natural language API server and agent for your JumpCloud environment, built with FastAPI. Created using ChatGPT and Cursor.
+A natural language API server and agent for your JumpCloud environment, built with FastAPI. Supports the Model Context Protocol (MCP) for integration with AI assistants and code editors.
 
 This MCP server lets you:
 
@@ -8,7 +8,7 @@ This MCP server lets you:
 - 💬 Ask natural language questions via `/ask`
 - 🤖 Use a **local, LLM-free agent** (keyword-based tool matcher)
 - 🐳 Run everything in Docker
-- ⚙️ Integrate directly with Cursor using `.cursor/mcp.json`
+- ⚙️ Integrate with MCP-compatible clients (Claude Desktop, Cursor, etc.)
 
 ---
 
@@ -18,7 +18,7 @@ This MCP server lets you:
 - 🔐 Token authentication using `x-api-key`
 - 🤖 `/ask` endpoint for semantic/natural language queries
 - 🐳 Docker Support
-- 💡 Cursor integration via `.cursor/mcp.json`
+- 💡 MCP protocol support for AI assistants and code editors
 
 ---
 
@@ -71,14 +71,11 @@ curl -X POST http://localhost:8000/ask   -H "Content-Type: application/json"   -
 
 ```graphql
 jumpcloud_mcp/
-├── .cursor/
-│   └── mcp.json             # MCP server config for Cursor
-├── main.py                  # FastAPI app + /ask endpoint
-├── local_agent.py           # Keyword-based tool-matching agent (no LLM)
+├── main.py                  # FastAPI app + MCP protocol + /ask endpoint
 ├── jumpcloud/
 │   ├── client.py            # JumpCloud API calls: users, systems, groups
 │   ├── models.py            # Pydantic models for validation
-│   ├── mcp_agent_runner.py  # (If used: local agent logic only)
+│   ├── mcp_agent_runner.py  # Keyword-based tool-matching agent (no LLM)
 │   └── auth.py              # API key auth
 ├── .env                     # Secrets/config
 ├── Dockerfile               # Build FastAPI server container
@@ -109,9 +106,29 @@ jumpcloud_mcp/
 
 ---
 
-## 💡 Cursor Integration
+## 💡 MCP Client Integration
 
-Create `.cursor/mcp.json`:
+This server supports the Model Context Protocol (MCP) and can be used with various AI assistants and code editors.
+
+### Claude Desktop
+
+Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+
+```json
+{
+  "mcpServers": {
+    "jumpcloud-mcp": {
+      "command": "uvicorn",
+      "args": ["main:app", "--host", "0.0.0.0", "--port", "8000"],
+      "cwd": "/path/to/jumpcloud_mcp"
+    }
+  }
+}
+```
+
+### Cursor IDE
+
+Create `.cursor/mcp.json` in your workspace:
 
 ```json
 {
@@ -124,12 +141,18 @@ Create `.cursor/mcp.json`:
 }
 ```
 
-Restart Cursor and select your MCP server for in-editor questions!
+### Other MCP Clients
+
+For any MCP-compatible client, configure it to connect to:
+
+- **HTTP URL**: `http://localhost:8000`
+- **Protocol**: MCP over HTTP
+- **Authentication**: Include `x-api-key` header with your JumpCloud API key
 
 ---
 
 ## ✨ Support
 
-This project is maintained for **local/private JumpCloud automation** and is ideal for secure deployments, development, and custom integrations.
+This project is maintained for **local/private JumpCloud automation** and is ideal for secure deployments, development, and custom integrations with MCP-compatible AI assistants and code editors.
 
 ---
